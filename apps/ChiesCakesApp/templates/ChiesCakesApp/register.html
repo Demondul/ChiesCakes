@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <!-- <link href='https://fonts.googleapis.com/css?family=Clicker Script' rel='stylesheet'> -->
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/bootstrap.css"%}" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/position.css"%}" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container header">
+            <h1>Chie's Cakes</h1>
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <a class="navbar-brand active" href="/register">Welcome Guest!</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/flavors">Flavors</a></li>
+                    <li><a href="/gallery">Gallery</a></li>
+                    <li><a href="/book">Reservations</a></li>
+                    <li><a href="/contacts">Contact Us</a></li>
+                    <li><a href="/reviews">Reviews</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container content">
+            <div class="inline-box col-sm-6">
+                <h2>Registration</h2>
+                <form action='/newuser' method='POST'>
+                    <!-- <span class="form-control">First name: </span> -->
+                    {% csrf_token %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'fName error' %}
+                            <span class="form-control alert-danger">{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %} 
+                    <input type="text" id="fName" name="txtFirst" class="form-control" placeholder="First Name"/>
+                    </br>
+                    <!-- <span class="form-control">Last name: </span> -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'lName error' %}
+                            <span class="form-control alert-danger">{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input type="text" id="lName" name="txtLast" class="form-control" placeholder="Last Name" />
+                    </br>
+                    <!-- <span class="form-control">Email: </span> -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'eMail error' %}
+                            <span class="form-control alert-danger">{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input type="email" id="email" name="txtEmail" class="form-control" placeholder="Email" />
+                    </br>
+                    <!-- <span class="form-control">Password: </span> -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'pwLen error' %}
+                            <span class="form-control alert-danger">{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input type="password" id="pWord" name="txtPWord" class="form-control" placeholder="Password" />
+                    </br>
+                    <!-- <span class="form-control">Confirm password: </span> -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'pwMatch error' %}
+                            <span class="form-control alert-danger">{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input type="password" id="conPWord" name="txtConWord" class="form-control" placeholder="Confirm Password" />
+                    </br>
+                    <input type="submit" class="btn btn-btn-default btnToRight" name="btnSubmit" value="register" name="btnRegister">
+                </form>
+            </div>
+            <div class="inline-box col-sm-6">
+                <h2>Login</h2>
+                <form action='/login' method='POST'>
+                    {% csrf_token %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'noEmail error' %}
+                            <span class="form-control alert-danger">{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input type="email" id="eMail" name="txtUMail" class="form-control" placeholder="email address" />
+                    </br>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'noMatch error' %}
+                            <span class="form-control alert-danger">{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <input type="password" id="userPassword" name="txtUPWord" class="form-control" placeholder="password" />
+                    </br>
+                    <input type="submit" class="btn btn-btn-default btnToRight" id="btnSubmit" value="Submit" name="btnLogin">
+                </form>
+            </div>
+        </div>
+        <div class="container footer">
+            <div class="footer inline-box">
+                <span>Follow us on: </span>
+            </div>
+            <div class="footer inline-box footer-box">                
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-facebook"></a> 
+            </div>
+            <div class="footer inline-box footer-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-twitter"></a>
+            </div>
+            <div class="footer inline-box footer-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-youtube"></a>
+            </div>
+            <p>About the Developer <a href="#" class="fa fa-linkedin"></a> </p>
+            <br>
+        </div>
+    </div>
+</body>
+</html>

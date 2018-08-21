@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Flavors</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/position.css"%}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+            $('.flavors').hover(
+                function(){
+                    $('#sample_pic').attr('src',$(this).attr('data-img-url'));
+                },
+                function(){
+                    $('#sample_pic').attr('src',$('#hdnSelected').val());
+                }
+            );
+            $('.flavors').click(function(){
+                $('#hdnSelected').val($(this).attr('data-img-url'));
+                $('#sample_pic').attr('src',$(this).attr('data-img-url'));
+                $('#test').val($(this).attr('data-img-url'));
+            })
+        })
+
+    </script>
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container header">
+            <div class="col-md-10 inline-box">
+                <h1>Chie's Cakes</h1>
+            </div>
+            <div class="col-md-2 inline-box">
+                <h1> 
+                    {% if 'ID' in request.session %}
+                        <form action="/logout"> 
+                            {% csrf_token %}
+                            <button class="form-control btn-block logout-button"> LOG OUT </button> 
+                        </form>
+                    {% endif %}
+                </h1>
+            </div>
+        </div>
+        <div class="container header">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    {% if 'ID' in request.session %}
+                        <span class="navbar-brand active">Welcome {{user.first_name}}!</span>
+                    {% else %}
+                        <a class="navbar-brand active" href="/register">Welcome Guest!</a>
+                    {% endif %}
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li class="active"><a href="/flavors">Flavors</a></li>
+                    <li><a href="/gallery">Gallery</a></li>
+                    <li><a href="/book">Reservations</a></li>
+                    <li><a href="/contacts">Contact Us</a></li>
+                    <li><a href="/reviews">Reviews</a></li>
+                </ul>
+            </nav>
+        </div>
+        <main class="container content" role=main>
+            <div class="container">
+                <div class="row col-md-6 inline-box">
+                    <div class="col-sm-10">
+                        <div class="single category">
+                            <h3 class="side-title">Flavors</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a class="flavors" data-img-url="media/fl_butter_cake.jpg">Butter Cake</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="flavors" data-img-url="media/fl_chocolate_cake.jpg">Chocolate Cake</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="flavors" data-img-url="media/fl_eggless_chocolate_cake.jpg">Eggless Chocolate Cake</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="flavors" data-img-url="media/fl_mango_cake.jpg">Mango Cake</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="flavors" data-img-url="media/fl_newyork_cheesecake.jpg">New York Cheese Cake ( Blueberry, Strawberry, Mango, Matcha, Oreo, Chocolate, and Coffee )</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="flavors" data-img-url="media/fl_red_velvet_cake.jpg">Red Velvet Cake</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="flavors" data-img-url="media/fl_strawberry_cake.jpg">Strawberry Cake</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="flavors" data-img-url="media/fl_vanilla_cake.jpg">Vanilla Cake ( Can be made into different colors )</a>
+                                </li>
+                                {% comment %} {% for flavor in flavors %}
+                                    <li class="list-group-item">
+                                        <a class="flavors" data-img-url="{{flavor.img_url}}">{{flavor.flavor}}</a>
+                                    </li>
+                                {% endfor %} {% endcomment %}
+                            </ul>
+                            <input type="hidden" id="hdnSelected" name="hdnSelected" value="media/fl_cakes.gif">
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-md-6 inline-box">
+                    <div class="col-sm-10">
+                        <img id="sample_pic" src="media/fl_cakes.gif" class="flavor-imgs">
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div class="container footer">
+            <div class="footer inline-box">
+                <span>Follow us on: </span>
+            </div>
+            <div class="footer inline-box footer-box">                
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-facebook"></a> 
+            </div>
+            <div class="footer inline-box footer-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-twitter"></a>
+            </div>
+            <div class="footer inline-box footer-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-youtube"></a>
+            </div>
+            <p>About the Developer <a href="#" class="fa fa-linkedin"></a> </p>
+            <br>
+        </div>
+    </div>
+</body>
+</html>

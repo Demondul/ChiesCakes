@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <!-- <link href='https://fonts.googleapis.com/css?family=Clicker Script' rel='stylesheet'> -->
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/bootstrap.css"%}" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/position.css'%}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#drpMonth").change(function(){
+                $("#hdnMonth").val($("#drpMonth").val());
+                this.form.submit();
+            })
+        })
+    </script>
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container header">
+            <div class="col-md-10 inline-box">
+                <h1>Chie's Cakes</h1>
+            </div>
+            <div class="col-md-2 inline-box">
+                <h1> 
+                    {% if 'ID' in request.session %}
+                        <form action="/logout"> 
+                            {% csrf_token %}
+                            <button class="form-control btn-block logout-button"> LOG OUT </button> 
+                        </form>
+                    {% endif %}
+                </h1>
+            </div>
+        </div>
+        <div class="container header">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    {% if 'ID' in request.session %}
+                        <span class="navbar-brand active">Welcome {{user.first_name}}!</span>
+                    {% else %}
+                        <a class="navbar-brand active" href="/register">Welcome Guest!</a>
+                    {% endif %}
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/flavors">Flavors</a></li>
+                    <li><a href="/gallery">Gallery</a></li>
+                    <li class="active"><a href="/book">Reservations</a></li>
+                    <li><a href="/contacts">Contact Us</a></li>
+                    <li><a href="/reviews">Reviews</a></li>
+                </ul>
+            </nav>
+        </div>
+        <main class="container content" role=main>
+            <div class="container month">
+                <form id="frmMonth" actiom="/book" method="POST">
+                    {% csrf_token %}
+                    <div class="col-md-3 month">
+                        <Label class="form">Month:</Label>
+                        <select id="drpMonth">
+                            <option value="0">Select Month</option>
+                            {% for key,month in months.items %}
+                            <option value="{{key}}">{{month}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="hidden" id="hdnMonth" name="hdnMonth">
+                        <!-- <input type="submit" value="Check this Month" class="btn btn-info"> -->
+                    </div>
+                </form>
+                <h1 class="center-text">{{monthName}}</h1>
+            </div>
+            <div class="container">
+                <div class="week row">
+                    <div class="center-text day inline-box">
+                        <h3>Monday</h3>
+                    </div>
+                    <div class="center-text day inline-box">
+                        <h3>Tuesday</h3>
+                    </div>
+                    <div class="center-text day inline-box">
+                        <h3>Wednesday</h3>
+                    </div>
+                    <div class="center-text day inline-box">
+                        <h3>Thursday</h3>
+                    </div>
+                    <div class="center-text day inline-box">
+                        <h3>Friday</h3>
+                    </div>
+                    <div class="center-text day inline-box">
+                        <h3>Saturday</h3>
+                    </div>
+                    <div class="center-text day inline-box">
+                        <h3>Sunday</h3>
+                    </div>
+                </div>
+                {% for weeks in calMonth %}
+                <div class="week row">
+                    {% for day in weeks %}
+                    <div class="center-text day inline-box">
+                        {% if 'ID' not in request.session and day != 0 %}
+                            {% if day >= thisDay or selectedMonth > thisMonth %}
+                                <a href="/register"><h3>{{day}}</h3></a>
+                            {% else %}
+                                <h3>{{day}}</h3>
+                            {%endif%}
+                        {% elif day != 0 %}
+                            {% if day >= thisDay or selectedMonth > thisMonth %}
+                                <a href="/reserve/{{day}}/{{selectedMonth}}"><h3>{{day}}</h3></a>
+                            {% else %}
+                                <h3>{{day}}</h3>
+                            {%endif%}
+                            {% for reservation in user.reserves.all %}
+                                {% if reservation.event_date.day == day and reservation.event_date.month == selectedMonth and reservation.event_date.year == year %}
+                                    <span class="glyphicon glyphicon-asterisk">  </span>
+                                {% endif %}
+                            {% endfor %}
+                        {%endif%} 
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+        <div class="container footer">
+            <div class="footer inline-box">
+                <span>Follow us on: </span>
+            </div>
+            <div class="footer inline-box footer-box">                
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-facebook"></a> 
+            </div>
+            <div class="footer inline-box footer-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-twitter"></a>
+            </div>
+            <div class="footer inline-box footer-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-youtube"></a>
+            </div>
+            <p>About the Developer <a href="#" class="fa fa-linkedin"></a> </p>
+            <br>
+        </div>
+    </div>
+</body>
+</html>

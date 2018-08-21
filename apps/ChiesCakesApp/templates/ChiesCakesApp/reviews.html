@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Reviews</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    {% comment %} {% load media %} {% endcomment %}
+    <!-- <link href='https://fonts.googleapis.com/css?family=Clicker Script' rel='stylesheet'> -->
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/bootstrap.css"%}" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/position.css"%}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/reviews.css"%}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+            $('#star1').click(function(){
+                $('#hdnRating').val("1");
+                $('#star1').css('color','#3498db');
+                $('#star2').css('color','#313131');
+                $('#star3').css('color','#313131');
+                $('#star4').css('color','#313131');
+                $('#star5').css('color','#313131');
+            })
+            $('#star2').click(function(){
+                $('#hdnRating').val("2")
+                $('#star1').css('color','#3498db');
+                $('#star2').css('color','#3498db');
+                $('#star3').css('color','#313131');
+                $('#star4').css('color','#313131');
+                $('#star5').css('color','#313131');
+            })
+            $('#star3').click(function(){
+                $('#hdnRating').val("3")
+                $('#star1').css('color','#3498db');
+                $('#star2').css('color','#3498db');
+                $('#star3').css('color','#3498db');
+                $('#star4').css('color','#313131');
+                $('#star5').css('color','#313131');
+            })
+            $('#star4').click(function(){
+                $('#hdnRating').val("4")
+                $('#star1').css('color','#3498db');
+                $('#star2').css('color','#3498db');
+                $('#star3').css('color','#3498db');
+                $('#star4').css('color','#3498db');
+                $('#star5').css('color','#313131');
+            })
+            $('#star5').click(function(){
+                $('#hdnRating').val("5")
+                $('#star1').css('color','#3498db');
+                $('#star2').css('color','#3498db');
+                $('#star3').css('color','#3498db');
+                $('#star4').css('color','#3498db');
+                $('#star5').css('color','#3498db');
+            })
+        })
+
+    </script>
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container header">
+            <div class="col-md-10 inline-box">
+                <h1>Chie's Cakes</h1>
+            </div>
+            <div class="col-md-2 inline-box">
+                <h1> 
+                    {% if 'ID' in request.session %}
+                        <form action="/logout"> 
+                            {% csrf_token %}
+                            <button class="form-control btn-block logout-button"> LOG OUT </button> 
+                        </form>
+                    {% endif %}
+                </h1>
+            </div>
+        </div>
+        <div class="container header">
+            <nav class="navbar navbar-default">
+                <div class="nav navbar-nav">
+                    {% if 'ID' in request.session %}
+                        <span class="navbar-brand">Welcome {{user.first_name}}!</span>
+                    {% else %}
+                        <a class="navbar-brand" href="/register">Welcome Guest!</a>
+                    {% endif %}
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/flavors">Flavors</a></li>
+                    <li><a href="/gallery">Gallery</a></li>
+                    <li><a href="/book">Reservations</a></li>
+                    <li><a href="/contacts">Contact Us</a></li>
+                    <li class="active"><a href="/reviews">Reviews</a></li>
+                </ul>
+            </nav>
+        </div>
+        <main class="container content" role=main>
+            <h1>Reviews</h1>
+            {% for review in reviews %}
+            <div class="col-md-12 reviews">
+                <div class="col-md-2 inline-box">
+                    <a href="{{ review.img_url }}" target="blank"> <img class="posted_img" src="{{ review.img_url }}" alt="default.png"> </a>
+                </div>
+                <div class="inline-box col-md-5">
+                    <label>{{review.review_by.first_name}} : </label>
+                    <div class="rating inline-box">
+                        {% for rate in rates %}
+                            {% if rate <= review.rating %}
+                                <a class="ion-android-star blue"></a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-10 inline-box">
+                    <span class="form-control rounded-0" name="txtReview" rows="3"> {{ review.review }} </span>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <form action="/post_review" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-md-12">
+                        <label>Post a review:</label>
+                    </div>
+                    <div class="col-md-2 inline-box">
+                        <img class="posted_img" src="{% static "css/images/default.png"%}" alt="default.png">
+                        <input type="file" name="myCake">
+                    </div>
+                    <div class="col-md-2 inline-box">
+                        <label>Rating : </label>
+                        <div class="box inline-box">
+                            <a class="ion-android-star b1" id="star5"></a>
+                            <a class="ion-android-star b2" id="star4"></a>
+                            <a class="ion-android-star b3" id="star3"></a>
+                            <a class="ion-android-star b4" id="star2"></a>
+                            <a class="ion-android-star b5" id="star1"></a>
+                        </div>
+                        <input type="hidden" name="hdnRating" id="hdnRating" value="0">
+                    </div>
+                    <div class="col-md-8 inline-box">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <span class="form-control alert-danger">{{message}}</span>
+                            {% endfor %}
+                        {% endif %} 
+                    </div>
+                    <div class="col-md-10 inline-box">
+                        <textarea class="form-control rounded-0" name="txtReview" rows="3"></textarea>
+                    </div>
+                    <div class="col-md-8 inline-box"></div>
+                    <div class="col-md-2 inline-box button-container">
+                        <input class="btn btn-primary btn-right" type="submit" value="Post Review">
+                    </div>
+                </form>
+            </div>
+        </main>
+        <div class="container footer">
+            <div class="footer inline-box">
+                <span>Follow us on: </span>
+            </div>
+            <div class="footer inline-box footer-box">                
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-facebook"></a> 
+            </div>
+            <div class="footer inline-box footer-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-twitter"></a>
+            </div>
+            <div class="footer inline-box footer-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-youtube"></a>
+            </div>
+            <p>About the Developer <a href="#" class="fa fa-linkedin"></a> </p>
+            <br>
+        </div>
+    </div>
+</body>
+</html>
