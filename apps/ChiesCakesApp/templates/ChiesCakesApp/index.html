@@ -115,9 +115,9 @@
                                 Say with Chie’s Cakes.
                             </h2>
                             {% if 'ID' in request.session %}
-                            <h3><a href="/register">Register</a> and order now!</h3>
-                            {% else %}
                             <h3><a href="/book">and order now!</a></h3>
+                            {% else %}
+                            <h3><a href="/register">Register</a> and order now!</h3>
                             {% endif %}
                         </div>
                     </div>
