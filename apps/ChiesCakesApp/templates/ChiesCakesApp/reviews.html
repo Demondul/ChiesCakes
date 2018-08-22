@@ -128,7 +128,7 @@
                         <label>Post a review:</label>
                     </div>
                     <div class="col-md-2 inline-box">
-                        <img class="posted_img" src="{% static "css/images/default.png"%}" alt="default.png">
+                        <img class="posted_img" src="media/images/default.png" alt="default.png">
                         <input type="file" name="myCake">
                     </div>
                     <div class="col-md-2 inline-box">
@@ -147,7 +147,7 @@
                             {% for message in messages %}
                                 <span class="form-control alert-danger">{{message}}</span>
                             {% endfor %}
-                        {% endif %} 
+                        {% endif %}
                     </div>
                     <div class="col-md-10 inline-box">
                         <textarea class="form-control rounded-0" name="txtReview" rows="3"></textarea>
