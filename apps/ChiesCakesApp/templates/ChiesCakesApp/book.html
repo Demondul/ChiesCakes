@@ -62,10 +62,16 @@
         </div>
         <main class="container content" role=main>
             <div class="container month">
+                <div class="col-md-12">
+                    <span class="text-block">
+                        <h4>Instruction: </h4>
+                        <h4>To reserve a date, please click the day of event on the calendar below. </h4>
+                    </span>
+                </div>
                 <form id="frmMonth" actiom="/book" method="POST">
                     {% csrf_token %}
                     <div class="col-md-3 month">
-                        <Label class="form">Month:</Label>
+                        <Label class="form">Select Month:</Label>
                         <select id="drpMonth">
                             <option value="0">Select Month</option>
                             {% for key,month in months.items %}
@@ -76,9 +82,9 @@
                         <!-- <input type="submit" value="Check this Month" class="btn btn-info"> -->
                     </div>
                 </form>
-                <h1 class="center-text">{{monthName}}</h1>
             </div>
-            <div class="container">
+            <div class="container text-block">
+                <h1 class="center-text">{{monthName}}</h1>
                 <div class="week row">
                     <div class="center-text day inline-box">
                         <h3>Monday</h3>
@@ -128,6 +134,7 @@
                     {% endfor %}
                 </div>
                 {% endfor %}
+                <br>
             </div>
         </main>
         <div class="container footer">

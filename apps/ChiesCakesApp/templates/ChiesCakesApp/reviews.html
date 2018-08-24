@@ -117,7 +117,43 @@
                     </div>
                 </div>
                 <div class="col-md-10 inline-box">
-                    <span class="form-control rounded-0" name="txtReview" rows="3"> {{ review.review }} </span>
+                    <div class="col-md-12 text-block">
+                        <span name="review"> {{ review.review }} </span>
+                    </div>
+                    {% for comment in comments %}
+                        <div class="col-md-12 inline-box-no-padding">
+                            <div class="col-md-1 inline-box-no-padding">
+                                <label class="float-right">{{ comment.comment_by.first_name }} : </label>
+                            </div>
+                            <div class="col-md-11 inline-box-no-padding">
+                                <span class="text-block" name="comment"> {{ comment.comment }} </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="col-md-12 inline-box-no-padding">
+                        <form action="/post_comment" method="POST">
+                            {% csrf_token %}
+                            <div class="col-md-1 inline-box-no-padding">
+                                <input type="hidden" name="hdnReviewID" value="{{ review.id }}">
+                                <label class="float-right" for="txtComment">Comment: </label>
+                            </div>
+                            <div class="col-md-11 inline-box-no-padding">
+                                <div class="col-md-9 inline-box">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            {% if message.tags == 'comment error' %}
+                                                <span class="form-control alert-danger">{{message}}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <textarea class="form-control rounded-0" name="txtComment" rows="2"></textarea>
+                            </div>
+                            <div class="col-md-12 button-container">
+                                <input class="btn btn-primary btn-right" type="submit" value="Post Comment">
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             {% endfor %}
@@ -145,7 +181,9 @@
                     <div class="col-md-8 inline-box">
                         {% if messages %}
                             {% for message in messages %}
-                                <span class="form-control alert-danger">{{message}}</span>
+                                {% if message.tags == 'noFile error' or message.tags == 'review error' or message.tags == 'rating error' %}
+                                    <span class="form-control alert-danger">{{message}}</span>
+                                {% endif %}
                             {% endfor %}
                         {% endif %}
                     </div>

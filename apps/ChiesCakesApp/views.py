@@ -173,14 +173,16 @@ def reviews(request):
     if 'ID' in request.session:
         context={
             'user':Users.objects.get(id=int(request.session['ID'])),
-            'reviews':Reviews.objects.all().order_by('-created_at'),
             'rates':[1,2,3,4,5],
+            'reviews':Reviews.objects.all().order_by('-created_at'),
+            'comments':Comments.objects.all().order_by('created_at'),
             'uploaded_file_url':'media/locate.jpg'
         }
         return render(request,'ChiesCakesApp/reviews.html',context)
     else:
         context={
             'reviews':Reviews.objects.all().order_by('-created_at'),
+            'comments':Comments.objects.all(),
             'rates':[1,2,3,4,5],
             'uploaded_file_url':'media/locate.jpg'
         }
@@ -211,6 +213,26 @@ def post_review(request):
                     messages.error(request,value,key)
 
             return redirect('/reviews', )
+
+        else:
+            return redirect('/reviews')
+
+    else:
+        return redirect('/register')
+
+def post_comment(request):
+    if 'ID' in request.session:
+        errors=Comments.objects.comment_validator(request.POST)
+        if len(errors)==0:
+            user=Users.objects.get(id=int(request.session['ID']))
+            review=Reviews.objects.get(id=int(request.POST['hdnReviewID']))
+            comment=Comments.objects.create(comment=request.POST['txtComment'],comment_by=user,comment_in=review)
+        else:
+            for key,value in errors.items():
+                messages.error(request,value,key)
+
+        return redirect('/reviews', )
+
     else:
         return redirect('/register')
 

@@ -46,6 +46,12 @@ class ValidationManager(models.Manager):
             errors['rating']="Don't forget to rate the cake."
         return errors
 
+    def comment_validator(self,postData):
+        errors={}
+        if len(postData['txtComment']) < 10:
+            errors['comment']="Please say a little bit more than that."
+        return errors
+
 # Create your models here.
 class Users(models.Model):
     first_name=models.CharField(max_length=255)
