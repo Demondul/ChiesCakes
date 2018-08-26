@@ -136,6 +136,10 @@ hr {
 }
 .flavors{
     cursor: pointer;
+    width: 100%;
+    display: block;
+    color: #495057;
+    background-clip: border-box;
 }
 .gallery-img{
     margin: 50px;
@@ -165,7 +169,35 @@ hr {
     height: 150px;
     width: 150px;
 }
+.text-block-center{
+    background: rgba(245,245,245,0.5);
+    width: 100%;
+    display: block;
+    color: #495057;
+    background-clip: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+}
 .text-block{
+    background: rgba(245,245,245,0.5);
+    width: 100%;
+    display: block;
+    color: #495057;
+    background-clip: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+}
+.review-comments{
     background: rgba(245,245,245,0.5);
     width: 100%;
     display: block;
@@ -174,6 +206,10 @@ hr {
     background-clip: border-box;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
+    padding: 6px 6px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
 }
 .footer-box{
     border-left: 2px solid black;

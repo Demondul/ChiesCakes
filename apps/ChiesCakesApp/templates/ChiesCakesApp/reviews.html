@@ -6,14 +6,12 @@
     <title>Reviews</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
-    {% comment %} {% load media %} {% endcomment %}
-    <!-- <link href='https://fonts.googleapis.com/css?family=Clicker Script' rel='stylesheet'> -->
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/bootstrap.css"%}" /> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "cdn/bower_components/bootstrap/dist/css/bootstrap.css"%}" />
+    <script src="{% static "cdn/bower_components/jquery/dist/jquery.js"%}"></script>
+    <script src="{% static "cdn/bower_components/bootstrap/dist/js/bootstrap.js"%}"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/position.css"%}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/reviews.css"%}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
 
@@ -117,7 +115,7 @@
                     </div>
                 </div>
                 <div class="col-md-10 inline-box">
-                    <div class="col-md-12 text-block">
+                    <div class="col-md-12 review-comments">
                         <span name="review"> {{ review.review }} </span>
                     </div>
                     {% for comment in comments %}
@@ -126,7 +124,7 @@
                                 <label class="float-right">{{ comment.comment_by.first_name }} : </label>
                             </div>
                             <div class="col-md-11 inline-box-no-padding">
-                                <span class="text-block" name="comment"> {{ comment.comment }} </span>
+                                <span class="review-comments" name="comment"> {{ comment.comment }} </span>
                             </div>
                         </div>
                     {% endfor %}

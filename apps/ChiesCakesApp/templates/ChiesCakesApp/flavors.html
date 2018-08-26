@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "cdn/bower_components/bootstrap/dist/css/bootstrap.css"%}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "cdn/bower_components/jquery-ui/themes/base/jquery-ui.css"%}" />
+    <script src="{% static "cdn/bower_components/jquery/dist/jquery.js"%}"></script>
+    <script src="{% static "cdn/bower_components/bootstrap/dist/js/bootstrap.js"%}"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/position.css"%}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
-
         $(document).ready(function(){
             $('.flavors').hover(
                 function(){
@@ -26,9 +27,8 @@
                 $('#hdnSelected').val($(this).attr('data-img-url'));
                 $('#sample_pic').attr('src',$(this).attr('data-img-url'));
                 $('#test').val($(this).attr('data-img-url'));
-            })
-        })
-
+            });
+        });
     </script>
 
 </head>
@@ -74,37 +74,13 @@
                     <div class="col-sm-10">
                         <div class="single category">
                             <h3 class="side-title">Flavors</h3>
-                            <h5> Hover or click a flavor below </h5>
+                            <h5 class="text-block-center"> Hover or click a flavor below </h5>
                             <ul class="list-group">
-                                <li class="list-group-item">
-                                    <a class="flavors" data-img-url="media/fl_butter_cake.jpg">Butter Cake</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a class="flavors" data-img-url="media/fl_chocolate_cake.jpg">Chocolate Cake</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a class="flavors" data-img-url="media/fl_eggless_chocolate_cake.jpg">Eggless Chocolate Cake</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a class="flavors" data-img-url="media/fl_mango_cake.jpg">Mango Cake</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a class="flavors" data-img-url="media/fl_newyork_cheesecake.jpg">New York Cheese Cake ( Blueberry, Strawberry, Mango, Matcha, Oreo, Chocolate, and Coffee )</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a class="flavors" data-img-url="media/fl_red_velvet_cake.jpg">Red Velvet Cake</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a class="flavors" data-img-url="media/fl_strawberry_cake.jpg">Strawberry Cake</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a class="flavors" data-img-url="media/fl_vanilla_cake.jpg">Vanilla Cake ( Can be made into different colors )</a>
-                                </li>
-                                {% comment %} {% for flavor in flavors %}
+                                {% for flavor in flavors %}
                                     <li class="list-group-item">
-                                        <a class="flavors" data-img-url="{{flavor.img_url}}">{{flavor.flavor}}</a>
+                                        <span class="flavors" data-img-url="{{flavor.img_url}}">{{flavor.flavor}}</span>
                                     </li>
-                                {% endfor %} {% endcomment %}
+                                {% endfor %}
                             </ul>
                             <input type="hidden" id="hdnSelected" name="hdnSelected" value="media/fl_cakes.gif">
                         </div>
