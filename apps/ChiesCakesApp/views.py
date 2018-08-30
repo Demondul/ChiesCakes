@@ -3,26 +3,45 @@ from . models import *
 from django.contrib import messages
 import bcrypt
 import calendar
+import os
 from datetime import datetime
 from django.conf import settings
 from django.conf.urls.static import static
 from django.core.files.storage import FileSystemStorage
 
 
+
 def index(request):
     # print("BASE DIR", BASE_DIR)
     if 'ID' in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+        details = Carousel.objects.all()
+
+        if user.access_type == 'admin':
+            return redirect('/admin')
+
         context={
-            'user':Users.objects.get(id=int(request.session['ID']))
+            'user':user,
+            'details':details
         }
-        return render(request,'ChiesCakesApp/index.html',context)
+
     else:
-        return render(request,'ChiesCakesApp/index.html')
+        details = Carousel.objects.all()
+        context={
+            'details':details
+        }
+
+    return render(request,'ChiesCakesApp/index.html',context)
 
 def flavors(request):
     if 'ID' in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+
+        if user.access_type == 'admin':
+            return redirect('/adminFlavors')
+
         context={
-            'user':Users.objects.get(id=int(request.session['ID'])),
+            'user':user,
             'flavors':Flavors.objects.all().order_by('flavor')
         }
         print(Flavors.objects.count())
@@ -36,12 +55,25 @@ def flavors(request):
     
 def gallery(request):
     if 'ID' in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+        details = Gallery.objects.all()
+        
+        print(len(details))
+        if user.access_type == 'admin':
+            return redirect('/adminGallery')
+
         context={
-            'user':Users.objects.get(id=int(request.session['ID']))
+            'user':Users.objects.get(id=int(request.session['ID'])),
+            'details':details
         }
         return render(request,'ChiesCakesApp/gallery.html', context)
     else:
-        return render(request,'ChiesCakesApp/gallery.html')
+        details = Gallery.objects.all()
+        
+        context={
+            'details':details
+        }
+        return render(request,'ChiesCakesApp/gallery.html', context)
     
 def book(request):
     months={}
@@ -162,6 +194,11 @@ def editProcess(request,day,month):
 
 def contacts(request):
     if 'ID' in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+
+        # if user.access_type == 'admin':
+        #     return redirect('/admin/contactus')
+
         context={
             'user':Users.objects.get(id=int(request.session['ID']))
         }
@@ -280,3 +317,233 @@ def logout(request):
         del request.session['ID']
     
     return redirect('/')
+
+# Admin pages starts here
+
+def adminHome(request):
+    if "ID" in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+        details = Carousel.objects.all()
+        if user.access_type == 'admin':    
+            context={
+                'user':user,
+                'details':details
+            }
+            return render(request,'ChiesCakesApp/adminHome.html',context)
+        else:
+            return redirect('/')
+    else:
+        return redirect('/')
+
+def addCarouselItem(request):
+    if "ID" in request.session:
+        errors={}
+        user = Users.objects.get(id=int(request.session['ID']))
+        if request.method == 'POST':
+            filepath = request.FILES.get('carouselItem', False)
+            if filepath:
+                errors = Carousel.objects.carousel_validator(request.POST)
+                if len(errors)==0:
+                    item_img = request.FILES['carouselItem']
+                    print("item_img:", item_img)
+                    fs = FileSystemStorage()
+                    filename = fs.save(item_img.name,item_img)
+                    uploaded_file_url = fs.url(filename)
+                    carousel_item = Carousel.objects.create(img_url=uploaded_file_url,filename=filename,caption=request.POST['txtCaption'],context=request.POST['txtContext'])
+                else:
+                    for key,value in errors.items():
+                        messages.error(request,value,key)
+            else:
+                errors['noFile']="Please select a picture. Preferrably 315x420 images."
+                for key,value in errors.items():
+                    messages.error(request,value,key)
+
+        return redirect('/admin')
+    else:
+        return redirect('/')
+
+def deleteCarouselItem(request,id):
+    if request.method == 'GET':
+        carousel_item = Carousel.objects.get(id=id)
+        
+        if deleteImage(carousel_item.filename):
+            carousel_item.delete()
+
+        return redirect('/admin')
+    
+def saveCarouselEdits(request):
+    if "ID" in request.session:
+        if request.method == 'POST':
+            errors={}
+            user = Users.objects.get(id=int(request.session['ID']))
+            carousel_item = Carousel.objects.get(id=int(request.POST['hdnID']))
+            request.session['carousel'] = carousel_item.id
+            filepath = request.FILES.get('carouselItem', False)
+            errors = Carousel.objects.edit_carousel_validator(request.POST)
+            if filepath:
+                deleteImage(carousel_item.filename)
+                item_img = request.FILES['carouselItem']
+                fs = FileSystemStorage()
+                filename = fs.save(item_img.name,item_img)
+                uploaded_file_url = fs.url(filename)
+                carousel_item.img_url=uploaded_file_url
+                carousel_item.filename=filename
+            if len(errors) == 0:
+                carousel_item.caption=request.POST['txtEditCaption']
+                carousel_item.context=request.POST['txtEditContext']
+                carousel_item.save()
+                errors['saved'] = "Saved!"
+        
+            for key,value in errors.items():
+                messages.error(request,value,key)
+            
+        return redirect('/admin')
+
+def adminFlavors(request):
+    if "ID" in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+        flavors = Flavors.objects.all()
+        if user.access_type == 'admin':
+            context={
+                'user':user,
+                'flavors':flavors
+            }
+            return render(request,'ChiesCakesApp/adminFlavors.html',context)
+        else:
+            return redirect('/flavors')
+    else:
+        return redirect('/')
+
+def addFlavorItem(request):
+    if "ID" in request.session:
+        errors={}
+        user = Users.objects.get(id=int(request.session['ID']))
+        if request.method == 'POST':
+            filepath = request.FILES.get('flavorsItem', False)
+            if filepath:
+                errors = Flavors.objects.flavor_validator(request.POST)
+                if len(errors)==0:
+                    item_img = request.FILES['flavorsItem']
+                    print("item_img:", item_img)
+                    fs = FileSystemStorage()
+                    filename = fs.save(item_img.name,item_img)
+                    uploaded_file_url = fs.url(filename)
+                    flavor_item = Flavors.objects.create(img_url=uploaded_file_url,filename=filename,flavor=request.POST['txtCaption'])
+                else:
+                    for key,value in errors.items():
+                        messages.error(request,value,key)
+            else:
+                errors['noFile']="Please select a picture. Preferrably 315x420 images."
+                for key,value in errors.items():
+                    messages.error(request,value,key)
+
+        return redirect('/adminFlavors')
+    else:
+        return redirect('/')
+
+def deleteFlavorItem(request,id):
+    if request.method == 'GET':
+        flavor_item = Flavors.objects.get(id=id)
+        
+        if deleteImage(flavor_item.filename):
+            flavor_item.delete()
+
+        return redirect('/adminFlavors')
+
+def saveFlavorEdits(request):
+    if "ID" in request.session:
+        if request.method == 'POST':
+            errors={}
+            user = Users.objects.get(id=int(request.session['ID']))
+            flavor_item = Flavors.objects.get(id=int(request.POST['hdnID']))
+            request.session['flavor'] = flavor_item.id
+            filepath = request.FILES.get('flavorItem', False)
+            errors = Flavors.objects.edit_flavor_validator(request.POST)
+            if filepath:
+                deleteImage(flavor_item.filename)
+                item_img = request.FILES['flavorItem']
+                fs = FileSystemStorage()
+                filename = fs.save(item_img.name,item_img)
+                uploaded_file_url = fs.url(filename)
+                flavor_item.img_url=uploaded_file_url
+                flavor_item.filename=filename
+            if len(errors) == 0:
+                flavor_item.flavor=request.POST['txtEditCaption']
+                flavor_item.save()
+                errors['saved'] = "Saved!"
+        
+            for key,value in errors.items():
+                messages.error(request,value,key)
+            
+        return redirect('/adminFlavors')
+
+def adminGallery(request):
+    if "ID" in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+        details = Gallery.objects.all()
+        if user.access_type == 'admin':
+            context={
+                'user':user,
+                'details':details
+            }
+            return render(request,'ChiesCakesApp/adminGallery.html',context)
+        else:
+            return redirect('/gallery')
+    else:
+        return redirect('/')
+
+def addGalleryItem(request):
+    if "ID" in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+        if request.method == 'POST':
+            filepath = request.FILES.get('flavorsItem', False)
+            if filepath:
+                item_img = request.FILES['flavorsItem']
+                fs = FileSystemStorage()
+                filename = fs.save(item_img.name,item_img)
+                uploaded_file_url = fs.url(filename)
+                gallery_item = Gallery.objects.create(img_url=uploaded_file_url,filename=filename,description="")
+            else:
+                errors['noFile']="Please select a picture. Preferrably 315x420 images."
+                for key,value in errors.items():
+                    messages.error(request,value,key)
+
+        return redirect('/adminGallery')
+    else:
+        return redirect('/')
+
+def deleteGalleryItem(request,id):
+    if request.method == 'GET':
+        gallery_item = Gallery.objects.get(id=id)
+        
+        if deleteImage(gallery_item.filename):
+            gallery_item.delete()
+
+        return redirect('/adminGallery')
+
+def adminContactUs(request):
+    if "ID" in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+        if user.access_type == 'admin':
+            context={
+                'user':user
+            }
+            return render(request,'ChiesCakesApp/adminContactUs.html',context)
+        else:
+            return redirect('/contacts')
+    else:
+        return redirect('/')
+
+def deleteImage(filename):
+        orig_path = os.getcwd()
+        media_path = os.getcwd() + '/media'
+        os.chdir(media_path)
+        isDeleted = False
+
+        if os.path.exists(filename):
+            os.remove(filename)
+            isDeleted = True
+            
+        os.chdir(orig_path)
+        return isDeleted
+

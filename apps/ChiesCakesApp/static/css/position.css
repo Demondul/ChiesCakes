@@ -85,6 +85,22 @@ hr {
 .carousel-caption{
     color: black;
 }
+.imgs-admin{
+    width: 230px;
+    height: 250px;
+    display: inline-block;
+}
+.carousel-imgs{
+    width: 320px;
+    height: 420px;
+}
+.link-delete{
+    color: red;
+}
+.top-bot-margin{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 .inline-box{
     display: inline-block;
 }
@@ -125,9 +141,24 @@ hr {
 .gallery-imgs{
     width: 280px;
     height: 280px;
+    border: 1px solid #ced4da;
+}
+.gallery-img img{
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
     -webkit-box-shadow: 20px 21px 5px 0px rgba(0,0,0,0.22);
     -moz-box-shadow: 20px 21px 5px 0px rgba(0,0,0,0.22);
     box-shadow: 20px 21px 5px 0px rgba(0,0,0,0.22);
+}
+.gallery-delete{
+    height: 20px;
+    width: 100%;
+}
+.gallery-caption{
+    width: 100%;
+    text-align: center;
+    min-height: 20px;
 }
 .flavor-imgs{
     height: 500px;
@@ -140,9 +171,6 @@ hr {
     display: block;
     color: #495057;
     background-clip: border-box;
-}
-.gallery-img{
-    margin: 50px;
 }
 .float-right{
     float: right;
@@ -196,6 +224,17 @@ hr {
     font-size: 14px;
     font-weight: normal;
     line-height: 1.42857143;
+}
+.item-block{
+    background: rgba(245,245,245,0.5);
+    width: 100%;
+    min-height: 50px;
+    display: block;
+    color: #495057;
+    background-clip: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 6px 12px;
 }
 .review-comments{
     background: rgba(245,245,245,0.5);

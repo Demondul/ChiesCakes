@@ -6,14 +6,10 @@
     <title>Contact Numbers and Addresses</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
-    <!-- <link href='https://fonts.googleapis.com/css?family=Clicker Script' rel='stylesheet'> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="{% static "cdn/bower_components/bootstrap/dist/css/bootstrap.css"%}" />
     <script src="{% static "cdn/bower_components/bootstrap/dist/js/bootstrap.js"%}"></script>
     <script src="{% static "cdn/bower_components/jquery/dist/jquery.min.js"%}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/position.css"%}" />
 </head>
 <body>
@@ -46,7 +42,7 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/flavors">Flavors</a></li>
                     <li><a href="/gallery">Gallery</a></li>
-                    <li><a href="/book">Reservations</a></li>
+                    <li><a href="/reservations">Reservations</a></li>
                     <li class="active"><a href="/contacts">Contact Us</a></li>
                     <li><a href="/reviews">Reviews</a></li>
                 </ul>
@@ -97,14 +93,29 @@
             <div class="footer inline-box">
                 <span>Follow us on: </span>
             </div>
-            <div class="footer inline-box footer-box">                
-                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-facebook"></a> 
+            <div class="footer inline-box">                
+                <a href="https://www.facebook.com/TPCbyChiesCakes/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x"></i>
+                    </span>
+                </a> 
             </div>
-            <div class="footer inline-box footer-box">
-                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-twitter"></a>
+            <div class="footer inline-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x"></i>
+                    </span>
+                </a>
             </div>
-            <div class="footer inline-box footer-box">
-                <a href="https://www.youtube.com/channel/UCEhfkyPSIjh0yiXGlHbN59w" class="fa fa-youtube"></a>
+            <div class="footer inline-box">
+                <a href="https://www.youtube.com/channel/UCEhfkyPSIjh0yiXGlHbN59w">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-youtube fa-stack-1x"></i>
+                    </span>
+                </a>
             </div>
             <p>About the Developer <a href="https://www.linkedin.com/in/delmundo-carlo/" class="fa fa-linkedin"></a> </p>
             <br>

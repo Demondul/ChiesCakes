@@ -7,10 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static "cdn/bower_components/bootstrap/dist/css/bootstrap.css"%}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static "cdn/bower_components/jquery-ui/themes/base/jquery-ui.css"%}" />
-    <script src="{% static "cdn/bower_components/jquery/dist/jquery.js"%}"></script>
-    <script src="{% static "cdn/bower_components/bootstrap/dist/js/bootstrap.js"%}"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "cdn/bower_components/bootstrap/dist/css/bootstrap.min.css"%}" />
+    <script src="{% static "cdn/bower_components/jquery/dist/jquery.min.js"%}"></script>
+    <script src="{% static "cdn/bower_components/bootstrap/dist/js/bootstrap.min.js"%}"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/position.css"%}" />
 
     <script>
@@ -28,6 +27,7 @@
                 $('#sample_pic').attr('src',$(this).attr('data-img-url'));
                 $('#test').val($(this).attr('data-img-url'));
             });
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 
@@ -62,7 +62,7 @@
                     <li><a href="/">Home</a></li>
                     <li class="active"><a href="/flavors">Flavors</a></li>
                     <li><a href="/gallery">Gallery</a></li>
-                    <li><a href="/book">Reservations</a></li>
+                    <li><a href="/reservations">Reservations</a></li>
                     <li><a href="/contacts">Contact Us</a></li>
                     <li><a href="/reviews">Reviews</a></li>
                 </ul>
@@ -71,17 +71,17 @@
         <main class="container content" role=main>
             <div class="container">
                 <div class="row col-md-6 inline-box">
-                    <div class="col-sm-10">
+                    <div class="col-sm-12">
                         <div class="single category">
                             <h3 class="side-title">Flavors</h3>
-                            <h5 class="text-block-center"> Hover or click a flavor below </h5>
-                            <ul class="list-group">
+                            <h5 class="text-block-center"> Hover a flavor below to view picture </h5>
+                            <div class="list-group">
                                 {% for flavor in flavors %}
-                                    <li class="list-group-item">
-                                        <span class="flavors" data-img-url="{{flavor.img_url}}">{{flavor.flavor}}</span>
-                                    </li>
+                                    <a href="#" class="list-group-item">
+                                        <span class="flavors"  data-toggle="tooltip" title="Click to make the picture stay." data-img-url="{{flavor.img_url}}">{{flavor.flavor}}</span>
+                                    </a>
                                 {% endfor %}
-                            </ul>
+                            </div>
                             <input type="hidden" id="hdnSelected" name="hdnSelected" value="media/fl_cakes.gif">
                         </div>
                     </div>
@@ -97,14 +97,29 @@
             <div class="footer inline-box">
                 <span>Follow us on: </span>
             </div>
-            <div class="footer inline-box footer-box">                
-                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-facebook"></a> 
+            <div class="footer inline-box">                
+                <a href="https://www.facebook.com/TPCbyChiesCakes/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x"></i>
+                    </span>
+                </a> 
             </div>
-            <div class="footer inline-box footer-box">
-                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-twitter"></a>
+            <div class="footer inline-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x"></i>
+                    </span>
+                </a>
             </div>
-            <div class="footer inline-box footer-box">
-                <a href="https://www.youtube.com/channel/UCEhfkyPSIjh0yiXGlHbN59w" class="fa fa-youtube"></a>
+            <div class="footer inline-box">
+                <a href="https://www.youtube.com/channel/UCEhfkyPSIjh0yiXGlHbN59w">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-youtube fa-stack-1x"></i>
+                    </span>
+                </a>
             </div>
             <p>About the Developer <a href="https://www.linkedin.com/in/delmundo-carlo/" class="fa fa-linkedin"></a> </p>
             <br>

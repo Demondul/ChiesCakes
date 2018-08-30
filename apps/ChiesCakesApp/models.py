@@ -8,6 +8,7 @@ EMAIL_REGEX=re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX=re.compile(r'^[a-zA-Z\s]$')
 
 class ValidationManager(models.Manager):
+    # Input Validation Functions
     def registration_validator(self, postData):
         errors={}
         if len(postData['txtFirst'])<1 or NAME_REGEX.match(postData['txtFirst']):
@@ -52,12 +53,45 @@ class ValidationManager(models.Manager):
             errors['comment']="Please say a little bit more than that."
         return errors
 
+    def carousel_validator(self,postData):
+        errors={}
+        if len(postData['txtCaption']) < 10 or len(postData['txtCaption']) >= 255:
+            errors['caption']="Caption should have 10 to 255 letters."
+        if len(postData['txtContext']) < 10 or len(postData['txtContext']) >= 255:
+            errors['context']="Context should have 10 to 255 letters."
+
+        return errors
+    
+    def edit_carousel_validator(self,postData):
+        errors={}
+        if len(postData['txtEditCaption']) < 10 or len(postData['txtEditCaption']) >= 255:
+            errors['editCaption']="Caption should have 10 to 255 letters."
+        if len(postData['txtEditContext']) < 10 or len(postData['txtEditContext']) >= 255:
+            errors['editContext']="Context should have 10 to 255 letters."
+
+        return errors
+
+    def flavor_validator(self,postData):
+        errors={}
+        if len(postData['txtCaption']) < 10 or len(postData['txtCaption']) >= 255:
+            errors['caption']="Caption should have 10 to 255 letters."
+
+        return errors
+    
+    def edit_flavor_validator(self,postData):
+        errors={}
+        if len(postData['txtEditCaption']) < 10 or len(postData['txtEditCaption']) >= 255:
+            errors['editCaption']="Caption should have 10 to 255 letters."
+
+        return errors
+
 # Create your models here.
 class Users(models.Model):
     first_name=models.CharField(max_length=255)
     last_name=models.CharField(max_length=255)
     email_address=models.CharField(max_length=255)
     password=models.CharField(max_length=25)
+    access_type=models.CharField(max_length=25)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     objects=ValidationManager()
@@ -78,6 +112,7 @@ class Orders(models.Model):
     celebrant=models.CharField(max_length=255)
     order_by=models.ForeignKey(Users,related_name="orders", on_delete=models.CASCADE)
     event=models.ForeignKey(Reservations,related_name="orders", on_delete=models.CASCADE)
+    contact_number=models.CharField(max_length=15, default=None, blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     objects=ValidationManager()
@@ -103,3 +138,32 @@ class Comments(models.Model):
 class Flavors(models.Model):
     flavor=models.TextField()
     img_url=models.CharField(max_length=255)
+    filename=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    objects=ValidationManager()
+
+class Carousel(models.Model):
+    img_url=models.CharField(max_length=255)
+    filename=models.CharField(max_length=255)
+    caption=models.CharField(max_length=255)
+    context=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    objects=ValidationManager()
+
+class Gallery(models.Model):
+    img_url=models.CharField(max_length=255)
+    filename=models.CharField(max_length=255)
+    description=models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    objects=ValidationManager()
+
+class Contacts(models.Model):
+    contact=models.CharField(max_length=255)
+    contact_type=models.CharField(max_length=255)
+    isPrimary=models.BooleanField(default=False)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    objects=ValidationManager()

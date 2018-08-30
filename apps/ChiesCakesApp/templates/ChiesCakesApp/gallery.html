@@ -42,7 +42,7 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/flavors">Flavors</a></li>
                     <li class="active"><a href="/gallery">Gallery</a></li>
-                    <li><a href="/book">Reservations</a></li>
+                    <li><a href="/reservations">Reservations</a></li>
                     <li><a href="/contacts">Contact Us</a></li>
                     <li><a href="/reviews">Reviews</a></li>
                 </ul>
@@ -50,47 +50,45 @@
         </div>
         <main class="container content" role=main>
             <h1>Gallery</h1>
-            <div class="gallery-img inline-box">
-                <img src="media/images/batman.jpg" alt="" class="gallery-imgs">
+            <div class="col-md-12">
+                {% for detail in details %}
+                    <div class="col-md-4 inline-box top-bot-margin">
+                        <div class="col-md-12 text-block gallery-img">
+                            <div class="gallery-delete">
+                            </div>
+                            <img src="{{detail.img_url}}" alt="" class="gallery-imgs">
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="gallery-img inline-box">
-                <img src="media/images/cake3.jpg" alt="" class="gallery-imgs">
-            </div>
-            <div class="gallery-img inline-box">
-                <img src="media/images/cake1.png" alt="" class="gallery-imgs">
-            </div>
-            <div class="gallery-img inline-box">
-                <img src="media/images/cake2.png" alt="" class="gallery-imgs">
-            </div>
-            <div class="gallery-img inline-box">
-                <img src="media/images/black.jpg" alt="" class="gallery-imgs">
-            </div>
-            <div class="gallery-img inline-box">
-                <img src="media/images/cake4.png" alt="" class="gallery-imgs">
-            </div>
-            <div class="gallery-img inline-box">
-                <img src="media/images/cake5.png" alt="" class="gallery-imgs">
-            </div>
-            <div class="gallery-img inline-box">
-                <img src="media/images/flowers.jpg" alt="" class="gallery-imgs">
-            </div>
-            <div class="gallery-img inline-box">
-                <img src="media/images/helga.jpg" alt="" class="gallery-imgs">
-            </div>
-            <br>
         </main>
         <div class="container footer">
             <div class="footer inline-box">
                 <span>Follow us on: </span>
             </div>
-            <div class="footer inline-box footer-box">                
-                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-facebook"></a> 
+            <div class="footer inline-box">                
+                <a href="https://www.facebook.com/TPCbyChiesCakes/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x"></i>
+                    </span>
+                </a> 
             </div>
-            <div class="footer inline-box footer-box">
-                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-twitter"></a>
+            <div class="footer inline-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x"></i>
+                    </span>
+                </a>
             </div>
-            <div class="footer inline-box footer-box">
-                <a href="https://www.youtube.com/channel/UCEhfkyPSIjh0yiXGlHbN59w" class="fa fa-youtube"></a>
+            <div class="footer inline-box">
+                <a href="https://www.youtube.com/channel/UCEhfkyPSIjh0yiXGlHbN59w">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-youtube fa-stack-1x"></i>
+                    </span>
+                </a>
             </div>
             <p>About the Developer <a href="https://www.linkedin.com/in/delmundo-carlo/" class="fa fa-linkedin"></a> </p>
             <br>

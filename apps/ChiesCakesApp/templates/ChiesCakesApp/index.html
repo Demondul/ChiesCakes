@@ -42,7 +42,7 @@
                     <li class="active"><a href="/">Home</a></li>
                     <li><a href="/flavors">Flavors</a></li>
                     <li><a href="/gallery">Gallery</a></li>
-                    <li><a href="/book">Reservations</a></li>
+                    <li><a href="/reservations">Reservations</a></li>
                     <li><a href="/contacts">Contact Us</a></li>
                     <li><a href="/reviews">Reviews</a></li>
                 </ul>
@@ -64,47 +64,18 @@
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
+
+                    {% for detail in details %}
+                    <div class="item">
+                        <img src="{{detail.img_url}}">
+                        <div class="carousel-caption">
+                            <h3>{{detail.caption}}</h3>
+                            <p>{{detail.context}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
                     <div class="item active">
-                    <img src="media/images/cake1.png">
-                    <div class="carousel-caption">
-                        <h3>For the classic him</h3>
-                        <p>Sophisticated and classy.</p>
-                    </div>
-                    </div>
-
-                    <div class="item">
-                    <img src="media/images/cake3.jpg">
-                    <div class="carousel-caption">
-                        <h3>For the precious her</h3>
-                        <p>Naturally beautiful.</p>
-                    </div>
-                    </div>
-
-                    <div class="item">
-                    <img src="media/images/cake2.png">
-                    <div class="carousel-caption">
-                        <h3>A date to remember</h3>
-                        <p>Never for get this...</p>
-                    </div>
-                    </div>
-
-                    <div class="item">
-                    <img src="media/images/cake4.png">
-                    <div class="carousel-caption">
-                        <h3>For the awesome kid.</h3>
-                        <p>That leader kid you know.</p>
-                    </div>
-                    </div>
-
-                    <div class="item">
-                    <img src="media/images/cake5.png">
-                    <div class="carousel-caption">
-                        <h3>For the coolest folks.</h3>
-                        <p>Just aged to perfection.</p>
-                    </div>
-                    </div>
-
-                    <div class="item">
                     <img src="media/images/invisible.png">
                         <div class="carousel-caption">
                             <h2>Chie's Cakes is an online bakery offering custom cakes, 
@@ -113,7 +84,7 @@
                                 Say with Chie’s Cakes.
                             </h2>
                             {% if 'ID' in request.session %}
-                            <h3><a href="/book">and order now!</a></h3>
+                            <h3><a href="/reservations">and order now!</a></h3>
                             {% else %}
                             <h3><a href="/register">Register</a> and order now!</h3>
                             {% endif %}
@@ -136,14 +107,29 @@
             <div class="footer inline-box">
                 <span>Follow us on: </span>
             </div>
-            <div class="footer inline-box footer-box">                
-                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-facebook"></a> 
+            <div class="footer inline-box">                
+                <a href="https://www.facebook.com/TPCbyChiesCakes/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x"></i>
+                    </span>
+                </a> 
             </div>
-            <div class="footer inline-box footer-box">
-                <a href="https://www.facebook.com/TPCbyChiesCakes/" class="fa fa-twitter"></a>
+            <div class="footer inline-box">
+                <a href="https://www.facebook.com/TPCbyChiesCakes/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x"></i>
+                    </span>
+                </a>
             </div>
-            <div class="footer inline-box footer-box">
-                <a href="https://www.youtube.com/channel/UCEhfkyPSIjh0yiXGlHbN59w" class="fa fa-youtube"></a>
+            <div class="footer inline-box">
+                <a href="https://www.youtube.com/channel/UCEhfkyPSIjh0yiXGlHbN59w">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-youtube fa-stack-1x"></i>
+                    </span>
+                </a>
             </div>
             <p>About the Developer <a href="https://www.linkedin.com/in/delmundo-carlo/" class="fa fa-linkedin"></a> </p>
             <br>

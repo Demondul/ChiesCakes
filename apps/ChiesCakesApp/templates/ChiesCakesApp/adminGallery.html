@@ -11,6 +11,12 @@
     <script src="{% static "cdn/bower_components/jquery/dist/jquery.js"%}"></script>
     <script src="{% static "cdn/bower_components/bootstrap/dist/js/bootstrap.js"%}"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/position.css"%}" />
+
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+    </script>
 </head>
 <body>
     <div class="wrapper">
@@ -39,10 +45,10 @@
                     {% endif %}
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="/flavors">Flavors</a></li>
-                    <li><a href="/gallery">Gallery</a></li>
-                    <li><a href="/book">Reservations</a></li>
+                    <li class="active"><a href="/gallery">Gallery</a></li>
+                    <li><a href="/reservations">Reservations</a></li>
                     <li><a href="/contacts">Contact Us</a></li>
                     <li><a href="/reviews">Reviews</a></li>
                 </ul>
@@ -51,7 +57,45 @@
         <br>
         <br>
         <main class="container content" role=main>
-            
+            <div class="col-md-12 top-bot-margin">
+                <form action="admin/addGalleryItem" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-md-12 text-block">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <img src="media/images/default.png" alt="Cake" class="imgs-admin">
+                            <input type="file" name="flavorsItem" accept="image/x-png,image/gif,image/jpeg">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'noFile error' %}
+                                    <p class="alert alert-danger">{{message}}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <div class="col-md-12 inline-box">
+                                <input type="Submit" class="btn btn-right">
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="col-md-9 inline-box">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                {% for detail in details %}
+                    <div class="col-md-4 inline-box top-bot-margin">
+                        <div class="col-md-12 text-block gallery-img">
+                            <div class="gallery-delete">
+                                <a class="link-delete" href="/admin/deleteGalleryItem/{{detail.id}}">
+                                    <span class="glyphicon glyphicon-remove btn-right" data-toggle="tooltip" title="Delete Item"></span>
+                                </a>
+                            </div>
+                            <img src="{{detail.img_url}}" alt="" class="gallery-imgs">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </main>
         <div class="container footer">
             <div class="footer inline-box">
