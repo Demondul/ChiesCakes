@@ -233,7 +233,6 @@ def reviews(request):
             'rates':[1,2,3,4,5],
             'uploaded_file_url':'media/locate.jpg'
         }
-        print(context.reviews[0])
         return render(request,'ChiesCakesApp/reviews.html',context)
     
 def post_review(request):
