@@ -56,6 +56,11 @@
                 $('#star4').css('color','#3498db');
                 $('#star5').css('color','#3498db');
             })
+
+            $('.view-img').click(function(){
+                $('#img-modal').attr('src',$(this).attr('data-img-url'))
+                $('#modal-title').text($(this).attr('posted-by') + " posted picture.")
+            })
         })
 
     </script>
@@ -99,10 +104,28 @@
         </div>
         <main class="container content" role=main>
             <h1>Reviews</h1>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content view-modal">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 id="modal-title">Reviews</h4>
+                        </div>
+                        <div class="modal-body">
+                            <img id="img-modal" src="{{detail.img_url}}" alt="Cake">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% for review in reviews %}
             <div class="col-md-12 reviews">
                 <div class="col-md-2 inline-box">
-                    <a href="{{ review.img_url }}" target="blank"> <img class="posted_img" src="{{ review.img_url }}" alt="default.png"> </a>
+                    <a class="btn btn-lg view-img" data-toggle="modal" data-target="#myModal" data-img-url="{{review.img_url}}" posted-by="{{review.review_by.first_name}}"> 
+                        <img class="posted_img" src="{{ review.img_url }}" alt="default.png"> 
+                    </a>
                 </div>
                 <div class="inline-box col-md-5">
                     <label>{{review.review_by.first_name}} : </label>
@@ -118,7 +141,7 @@
                     <div class="col-md-12 review-comments">
                         <span name="review"> {{ review.review }} </span>
                     </div>
-                    {% for comment in comments %}
+                    {% for comment in review.the_comments.all %}
                         <div class="col-md-12 inline-box-no-padding">
                             <div class="col-md-1 inline-box-no-padding">
                                 <label class="float-right">{{ comment.comment_by.first_name }} : </label>

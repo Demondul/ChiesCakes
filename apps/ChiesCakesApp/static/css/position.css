@@ -56,6 +56,9 @@ hr {
     font-family: 'Quicksand';
     padding-right: 0px;
     padding-left: 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    min-height: 500px;
 }
 .carousel-container{
     width: 100%;
@@ -151,6 +154,11 @@ hr {
     -moz-box-shadow: 20px 21px 5px 0px rgba(0,0,0,0.22);
     box-shadow: 20px 21px 5px 0px rgba(0,0,0,0.22);
 }
+.gallery-img a{
+    /* color: transparent; */
+    background-color: transparent;
+    border-color: transparent;
+}
 .gallery-delete{
     height: 20px;
     width: 100%;
@@ -159,6 +167,16 @@ hr {
     width: 100%;
     text-align: center;
     min-height: 20px;
+}
+.view-modal{
+    width: 1000px;
+    height: 1000px;
+}
+.view-modal img{
+    display: block;
+    margin: auto;
+    height: 800px;
+    width: 800px;
 }
 .flavor-imgs{
     height: 500px;
@@ -196,6 +214,21 @@ hr {
 .card-img{
     height: 150px;
     width: 150px;
+}
+.grid-header{
+    background: rgba(245,245,245,0.5);
+    width: 100%;
+    display: inline-block;
+    color: #495057;
+    background-clip: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
 }
 .text-block-center{
     background: rgba(245,245,245,0.5);

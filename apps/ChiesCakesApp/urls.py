@@ -31,6 +31,7 @@ urlpatterns=[
     url(r'^admin/reservations$',views.adminHome),
     url(r'^admin/contactus$',views.adminContactUs),
     url(r'^admin/reviews$',views.adminHome),
-    url(r'^admin/manage/orders$',views.adminHome),
+    url(r'^admin/manage/order/(?P<day>\d+)/(?P<month>\d+)/(?P<cid>\d+)$',views.adminViewReservation),
+    url(r'^admin/manage/reservations/(?P<day>\d+)/(?P<month>\d+)$',views.adminReservations),
     url(r'^admin/manage/users$',views.adminHome)
 ]

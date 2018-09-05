@@ -122,11 +122,19 @@
                             {% else %}
                                 <h3>{{day}}</h3>
                             {%endif%}
-                            {% for reservation in user.reserves.all %}
-                                {% if reservation.event_date.day == day and reservation.event_date.month == selectedMonth and reservation.event_date.year == year %}
-                                    <span class="glyphicon glyphicon-asterisk">  </span>
-                                {% endif %}
-                            {% endfor %}
+                            {% if isAdmin %}
+                                {% for reservation in reservations %}
+                                    {% if reservation.event_date.day == day and reservation.event_date.month == selectedMonth and reservation.event_date.year == year %}
+                                        <span class="glyphicon glyphicon-asterisk">  </span>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% for reservation in user.reserves.all %}
+                                    {% if reservation.event_date.day == day and reservation.event_date.month == selectedMonth and reservation.event_date.year == year %}
+                                        <span class="glyphicon glyphicon-asterisk">  </span>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                         {%endif%} 
                     </div>
                     {% endfor %}

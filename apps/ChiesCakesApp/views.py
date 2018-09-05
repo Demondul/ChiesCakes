@@ -58,7 +58,6 @@ def gallery(request):
         user = Users.objects.get(id=int(request.session['ID']))
         details = Gallery.objects.all()
         
-        print(len(details))
         if user.access_type == 'admin':
             return redirect('/adminGallery')
 
@@ -79,28 +78,37 @@ def book(request):
     months={}
     month=datetime.now().month
     year=datetime.now().year
-    # allReservations=Reservations.objects.filter(event_date)
+    isAdmin = False
+
     if request.method == 'POST':
         month=int(request.POST['hdnMonth'])
-        # print(month)
+        
         for i in range(datetime.now().month,13):
             months[str(i)]=datetime(datetime.now().year,i,1).strftime('%B')
     else:
         for i in range(datetime.now().month,13):
             months[str(i)]=datetime(datetime.now().year,i,1).strftime('%B')
-    # print(month)
-    # print(months)
-    # print(calendar.monthcalendar(datetime.now().year,month))
+            
     if 'ID' in request.session:
+        user = Users.objects.get(id=int(request.session['ID']))
+        reservations=user.reserves.all()
+
+        if user.access_type == 'admin':
+            isAdmin=True
+            reservations=Reservations.objects.all()
+            print('Reservations:', len(reservations))
+            
         context={
-            'user':Users.objects.get(id=int(request.session['ID'])),
+            'user':user,
             'calMonth':calendar.monthcalendar(datetime.now().year,month),
             'months':months,
             'selectedMonth':month,
             'thisDay':datetime.now().day,
             'thisMonth':datetime.now().month,
             'monthName':datetime(datetime.now().year,month,1).strftime('%B'),
-            'year':datetime.now().year
+            'year':datetime.now().year,
+            'isAdmin':isAdmin,
+            'reservations':reservations
         }
     else:
         context={
@@ -119,14 +127,15 @@ def reserve(request,day,month):
         user=Users.objects.get(id=int(request.session['ID']))
         edit=False
         context={}
+
+        if user.access_type == 'admin':
+            return redirect('/admin/manage/reservations/' + day + '/' + month)
+
         if user.reserves.count() > 0:
-            # print("you have reservations")
             for reserved in user.reserves.all():
-                # print(reserved.event_date.day==int(day))
-                # print(day)
                 if reserved.event_date.day == int(day) and reserved.event_date.month == int(month) and reserved.event_date.year == datetime.now().year:
                     reservation=reserved
-                    order=reserved.orders.get(order_by=user)
+                    order=reservation.orders.get(order_by=user)
                     edit=True
                     
                     context={
@@ -139,7 +148,6 @@ def reserve(request,day,month):
                         'reservation':reservation,
                         'order':order
                     }
-                    # print("ready for edit")
                     return render(request,'ChiesCakesApp/editReservation.html',context)
 
         if not edit:
@@ -162,12 +170,12 @@ def process(request):
             date=datetime.strptime(request.POST['hdnDate'],'%m/%d/%Y')
             user=Users.objects.get(id=int(request.session['ID']))
             reservation=Reservations.objects.create(eventType=request.POST['txtEvent'],location=request.POST['txtLoc'],event_date=date,event_by=user)
-            order=Orders.objects.create(orderType=request.POST['drpOrder'],description=request.POST['txtDesc'],celebrant=request.POST['txtCeleb'],order_by=user,event=reservation)
+            order=Orders.objects.create(orderType=request.POST['drpOrder'],description=request.POST['txtDesc'],celebrant=request.POST['txtCeleb'],contact_number=request.POST['txtNumber'],order_by=user,event=reservation)
             print(reservation)
             print(order)
         else:
             print(request.method)
-        return redirect('/book')
+        return redirect('/reservations')
     else:
         return redirect('/register')
 
@@ -190,7 +198,7 @@ def editProcess(request,day,month):
                     reservation.save()
                     order.save()
     
-    return redirect('/book')
+    return redirect('/reservations')
 
 def contacts(request):
     if 'ID' in request.session:
@@ -208,13 +216,15 @@ def contacts(request):
 
 def reviews(request):
     if 'ID' in request.session:
+        reviews = Reviews.objects.all().order_by('-created_at')
         context={
             'user':Users.objects.get(id=int(request.session['ID'])),
             'rates':[1,2,3,4,5],
-            'reviews':Reviews.objects.all().order_by('-created_at'),
+            'reviews':reviews,
             'comments':Comments.objects.all().order_by('created_at'),
             'uploaded_file_url':'media/locate.jpg'
         }
+
         return render(request,'ChiesCakesApp/reviews.html',context)
     else:
         context={
@@ -223,6 +233,7 @@ def reviews(request):
             'rates':[1,2,3,4,5],
             'uploaded_file_url':'media/locate.jpg'
         }
+        print(context.reviews[0])
         return render(request,'ChiesCakesApp/reviews.html',context)
     
 def post_review(request):
@@ -520,6 +531,61 @@ def deleteGalleryItem(request,id):
             gallery_item.delete()
 
         return redirect('/adminGallery')
+
+def adminReservations(request,day,month):
+    if 'ID' in request.session:
+        user=Users.objects.get(id=int(request.session['ID']))
+        
+        reservations = Reservations.objects.filter(event_date=datetime(datetime.now().year,int(month),int(day)))
+        print(len(reservations))
+        print(user.reserves)
+
+        for reservation in reservations:
+            print(reservation.orders)
+
+        context={
+            'user':user,
+            'monthName':datetime(datetime.now().year,int(month),int(day)).strftime('%B'),
+            'month':month,
+            'day':day,
+            'year':str(datetime.now().year),
+            'date':datetime(datetime.now().year,int(month),int(day)).strftime('%A %d, %B %Y'),
+            'reservations':reservations
+        }
+
+        return render(request,'ChiesCakesApp/adminReservations.html',context)
+        
+    else:
+        return redirect('/register')
+
+def adminViewReservation(request,day,month,cid):
+    if 'ID' in request.session:
+        user=Users.objects.get(id=int(request.session['ID']))
+        customer=Users.objects.get(id=int(cid))
+        edit=False
+        context={}
+
+        if customer.reserves.count() > 0:
+            for reserved in customer.reserves.all():
+                if reserved.event_date.day == int(day) and reserved.event_date.month == int(month) and reserved.event_date.year == datetime.now().year:
+                    reservation=reserved
+                    order=reservation.orders.get(order_by=customer)
+                    edit=False
+                    
+                    context={
+                        'user':user,
+                        'monthName':datetime(datetime.now().year,int(month),int(day)).strftime('%B'),
+                        'month':month,
+                        'day':day,
+                        'year':str(datetime.now().year),
+                        'edit':edit,
+                        'reservation':reservation,
+                        'order':order
+                    }
+                    return render(request,'ChiesCakesApp/adminViewReservation.html',context)
+
+    else:
+        return redirect('/register')
 
 def adminContactUs(request):
     if "ID" in request.session:
