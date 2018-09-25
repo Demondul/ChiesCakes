@@ -344,3 +344,19 @@ textarea {
 .show-border{
     border: 1px solid black;
 }
+.access-btn{
+    background: rgba(68,120,187,0.5);
+    width: 100%;
+    height: 300px;
+    display: block;
+    color: #495057;
+    background-clip: border-box;
+    border: 1px solid #4478bb;
+    border-radius: 0.25rem;
+    padding: 6px 12px;
+    font-size: 14rem;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+}

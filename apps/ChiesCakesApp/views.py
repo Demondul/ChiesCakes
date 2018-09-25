@@ -287,7 +287,7 @@ def register(request):
     if 'ID' in request.session:
         return redirect('/')
     else:
-        return render(request,'ChiesCakesApp/register.html')
+        return render(request,'ChiesCakesApp/NewLogin.html')
     
 def newuser(request):
     if request.method=='POST':
@@ -326,7 +326,7 @@ def logout(request):
     if 'ID' in request.session:
         del request.session['ID']
     
-    return redirect('/')
+    return redirect('/register')
 
 # Admin pages starts here
 

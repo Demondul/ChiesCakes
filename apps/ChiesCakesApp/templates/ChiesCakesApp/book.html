@@ -119,6 +119,8 @@
                         {% elif day != 0 %}
                             {% if day >= thisDay or selectedMonth > thisMonth %}
                                 <a href="/reserve/{{day}}/{{selectedMonth}}"><h3>{{day}}</h3></a>
+                            {% elif isAdmin %}
+                                <a href="/reserve/{{day}}/{{selectedMonth}}"><h3>{{day}}</h3></a>
                             {% else %}
                                 <h3>{{day}}</h3>
                             {%endif%}
