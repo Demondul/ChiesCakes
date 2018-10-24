@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'apps.Reservations',
     'apps.Reviews',
     'apps.Profile',
-    'apps.template',
+    'apps.utility',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,8 +83,12 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE' : 'django.db.backends.postgresql',
+        'NAME' : 'ChiesCakes',
+        'USER' : 'postgres',
+        'PASSWORD' : 'adminroot',
+        'HOST' : '127.0.0.1',
+        'PORT' : '5433'
     }
 }
 
@@ -126,3 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
