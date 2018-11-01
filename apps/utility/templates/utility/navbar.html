@@ -1,13 +1,31 @@
+<script>
+    $(document).ready(function(){
+        $('.sidenav').sidenav();
+    });
+</script>
+
 <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo"> Chie's Cakes </a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Flavors</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Reservations</a></li>
-        <li><a href="#">Reviews</a></li>
-        <li><a href="#">About Us</a></li>
+      <a href="#" class='sidenav-trigger' data-target='mobile-nav'>
+          <i class="material-icons">menu</i>
+      </a>
+      <ul id="nav" class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="flavors/">Flavors</a></li>
+        <li><a href="gallery/">Gallery</a></li>
+        <li><a href="reservations/">Reservations</a></li>
+        <li><a href="reviews/">Reviews</a></li>
+        <li><a href="info/">About Us</a></li>
       </ul>
     </div>
 </nav>
+
+<ul id="mobile-nav" class="sidenav">
+    <li><a href="/">Home</a></li>
+    <li><a href="flavors/">Flavors</a></li>
+    <li><a href="gallery/">Gallery</a></li>
+    <li><a href="reservations/">Reservations</a></li>
+    <li><a href="reviews/">Reviews</a></li>
+    <li><a href="info/">About Us</a></li>
+</ul>
