@@ -1,12 +1,18 @@
-.footer{
+.footer {
     font-family: 'Charmonman';
     text-align: center;
     font-size: 25px;
     padding: 10px;
 }
 
-.footer-detail{
+.footer-detail {
     width: 50%;
     margin: 0 auto;
     display: block;
+}
+
+@media only screen and (max-width: 600px) {
+    .footer-detail {
+        font-size: 12px;
+    }
 }

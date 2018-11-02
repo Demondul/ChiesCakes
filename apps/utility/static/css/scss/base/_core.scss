@@ -15,6 +15,7 @@ body{
     min-height: 600px;
     padding: 20px;
     @include border-radius(5px);
+    @include box-shadow(0, 4px, 8px);
 }
 
 nav{
@@ -22,6 +23,7 @@ nav{
     font-family: 'Charmonman';
     font-size: 25px;
 }
+
 section{
     background: rgba(245,245,245,0.8);
     width: 100%;
@@ -33,4 +35,5 @@ section{
     border-radius: 0.25rem;
     padding: 6px 12px;
     @include border-radius(5px);
+    @include box-shadow(0, 4px, 8px);
 }
