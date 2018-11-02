@@ -3,14 +3,22 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Template</title>
+        <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% include "utility/components.html" %}
     </head>
 <body>
-    <div class="container">
-        <h1> HOME PAGE </h1>
+    <main class="container">
+        <div class="header">
+            <h1> HOME PAGE </h1>
+        </div>
         {% include "utility/navbar.html" %}
-    </div>
+        <div class="content">
+            <section>
+                
+            </section>
+        </div>
+    </main>
+    {% include "utility/footer.html" %}
 </body>
 </html>

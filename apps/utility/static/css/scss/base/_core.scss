@@ -1,10 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body{
     background-image: url('img/newBG.png');
     background-repeat: repeat;
+}
+
+.content{
+    background-image: url('img/innerBG.png');
+    background-repeat: repeat;
+    margin-top: 20px;
+    min-height: 600px;
+    padding: 20px;
+    @include border-radius(5px);
 }
 
 nav{
     padding: 0px 10px;
     font-family: 'Charmonman';
     font-size: 25px;
+}
+section{
+    background: rgba(245,245,245,0.8);
+    width: 100%;
+    min-height: 500px;
+    display: block;
+    color: #495057;
+    background-clip: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 6px 12px;
+    @include border-radius(5px);
 }

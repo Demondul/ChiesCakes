@@ -1,0 +1,19 @@
+//Colors
+$light-blue : #007bff;
+$warning-red : #dc3545;
+$gradient : linear-gradient($warning-red,#128fc2);
+
+//Spacing
+$m-space : 15px;
+
+//Fonts
+$helvetica : 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$rockwell : Rockwell, 'Courier Bold', Courier, Georgia, Times, 'Times New Roman', serif;
+
+//Mixins
+@mixin border-radius($radius) {
+    -webkit-border-radius : $radius;
+    -moz-border-radius : $radius;
+    -ms-border-radius : $radius;
+    border-radius : $radius;
+}
