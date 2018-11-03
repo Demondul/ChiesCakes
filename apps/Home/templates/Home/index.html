@@ -5,7 +5,21 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/homeStyle.css"%}" />
+
         {% include "utility/components.html" %}
+        <script>
+            $(document).ready(function(){
+                $('.carousel.carousel-slider').carousel({
+                    indicators : true
+                });
+
+                setInterval(function(){
+                    $('.carousel').carousel('next');
+                }, 2000);
+            });
+        </script>
     </head>
 <body>
     <main class="container">
@@ -13,7 +27,20 @@
         {% include "utility/navbar.html" %}
         <div class="content">
             <section>
-                
+                <p class="quote">
+                    <q>Chie's Cakes is an online bakery offering custom cakes, 
+                        cupcakes and desserts for every occasion.  
+                        So make the moment sweeter. Say it with cake! 
+                        Say with Chie’s Cakes.
+                    </q>
+                </p>
+                <div class="carousel carousel-slider">
+                    <a href="#one!" class="carousel-item"><img src="/media/cake1.jpg" alt="CAKE1"></a>
+                    <a href="#two!" class="carousel-item"><img src="/media/cake2.jpg" alt="CAKE2"></a>
+                    <a href="#three!" class="carousel-item"><img src="/media/cake3.jpg" alt="CAKE3"></a>
+                    <a href="#four!" class="carousel-item"><img src="/media/cake4.jpg" alt="CAKE4"></a>
+                    <a href="#five!" class="carousel-item"><img src="/media/cake5.jpg" alt="CAKE5"></a>
+                </div>
             </section>
         </div>
     </main>

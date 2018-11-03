@@ -34,11 +34,8 @@ section {
   width: 100%;
   min-height: 500px;
   display: block;
-  color: #495057;
   background-clip: border-box;
   border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  padding: 6px 12px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -48,6 +45,38 @@ section {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+@media only screen and (max-width: 600px) {
+  .content {
+    background-image: url("img/innerBG.png");
+    background-repeat: repeat;
+    margin-top: 5px;
+    min-height: 150px;
+    padding: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  section {
+    background: rgba(245, 245, 245, 0.8);
+    width: 100%;
+    min-height: 150px;
+    display: block;
+    background-clip: border-box;
+    border: 1px solid #ced4da;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
 /* FONTS */
 /* vietnamese */
 @font-face {

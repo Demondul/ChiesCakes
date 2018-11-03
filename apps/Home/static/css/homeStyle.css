@@ -1,0 +1,37 @@
+.quote {
+  font-size: 25px;
+  font-family: "Clicker Script";
+  color: #e91e63;
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .quote {
+    font-size: 12px;
+    font-family: "Clicker Script";
+    color: #e91e63;
+    text-align: center;
+  }
+}
+img {
+  object-fit: cover;
+  height: 600px;
+}
+
+@media only screen and (max-width: 600px) {
+  img {
+    height: 300px;
+    width: 600px;
+  }
+}
+.carousel {
+  height: 600px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .carousel {
+    height: 300px !important;
+  }
+}
+
+/*# sourceMappingURL=homeStyle.css.map */

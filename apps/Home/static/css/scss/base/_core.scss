@@ -1,0 +1,15 @@
+.quote {
+    font-size: 25px;
+    font-family: 'Clicker Script';
+    color: #e91e63;
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .quote {
+        font-size: 12px;
+        font-family: 'Clicker Script';
+        color: #e91e63;
+        text-align: center;
+    }
+}

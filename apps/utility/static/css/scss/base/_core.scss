@@ -3,12 +3,12 @@
     padding: 0;
 }
 
-body{
+body {
     background-image: url('img/newBG.png');
     background-repeat: repeat;
 }
 
-.content{
+.content {
     background-image: url('img/innerBG.png');
     background-repeat: repeat;
     margin-top: 20px;
@@ -18,22 +18,42 @@ body{
     @include box-shadow(0, 4px, 8px);
 }
 
-nav{
+nav {
     padding: 0px 10px;
     font-family: 'Charmonman';
     font-size: 25px;
 }
 
-section{
+section {
     background: rgba(245,245,245,0.8);
     width: 100%;
     min-height: 500px;
     display: block;
-    color: #495057;
     background-clip: border-box;
     border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    padding: 6px 12px;
     @include border-radius(5px);
     @include box-shadow(0, 4px, 8px);
+}
+
+@media only screen and (max-width:600px) {
+    .content {
+        background-image: url('img/innerBG.png');
+        background-repeat: repeat;
+        margin-top: 5px;
+        min-height: 150px;
+        padding: 5px;
+        @include border-radius(5px);
+        @include box-shadow(0, 4px, 8px);
+    }
+    
+    section {
+        background: rgba(245,245,245,0.8);
+        width: 100%;
+        min-height: 150px;
+        display: block;
+        background-clip: border-box;
+        border: 1px solid #ced4da;
+        @include border-radius(5px);
+        @include box-shadow(0, 4px, 8px);
+    }
 }
